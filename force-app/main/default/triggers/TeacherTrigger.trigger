@@ -1,6 +1,6 @@
 trigger TeacherTrigger on Contact (before update) {
-    if(trigger.isUpdate){
-        if(trigger.isBefore){
+    if(Trigger.isUpdate){
+        if(Trigger.isBefore){
             TeacherManager.beforeUpdateTeacher(Trigger.New);
         }
     }

@@ -1,10 +1,10 @@
 trigger ClassTrigger on Class__c (before delete,after update) {
-    if(trigger.isDelete){
-        if(trigger.isBefore){
-            ClassManager.beforeDeleteClass();
+    if(Trigger.isDelete){
+        if(Trigger.isBefore){
+            ClassManager.beforeDeleteClass(Trigger.old);
         }
-    }else if(trigger.isAfter){
-        if(trigger.isUpdate){
+    }else if(Trigger.isAfter){
+        if(Trigger.isUpdate){
             ClassManager.afterUpdateDeleteStudent(Trigger.New,Trigger.oldMap);
         }
             

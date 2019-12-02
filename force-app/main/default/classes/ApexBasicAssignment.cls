@@ -28,8 +28,8 @@ public class ApexBasicAssignment {
         return numberOfDays;
     }
     
-    public static List<String> GetAllsObject(){
-        List<string> SObjectList = new List<string>();
+    public static List<String> getAllsObject(){
+        List<String> SObjectList = new List<String>();
         for(Schema.SObjectType objTyp : Schema.getGlobalDescribe().Values()){
             String name = objTyp.getDescribe().getName();
             SobjectList.add(name);

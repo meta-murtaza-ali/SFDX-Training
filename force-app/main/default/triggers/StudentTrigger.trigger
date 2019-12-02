@@ -1,12 +1,12 @@
-trigger StudentTrigger on Student__c (before insert) {
-    if(trigger.isInsert){
-        if(trigger.isBefore){
+trigger StudentTrigger on Student__c (before insert,after update,after insert) {
+    if(Trigger.isInsert){
+        if(Trigger.isBefore){
             StudentManager.beforeInsertStudent(Trigger.New);
-        }else if(trigger.isAfter){
+        }else if(Trigger.isAfter){
             StudentManager.afterUpdateInsertStudent(Trigger.New,null);
         }
-    }else if(trigger.isUpdate){
-        if(trigger.isAfter){
+    }else if(Trigger.isUpdate){
+        if(Trigger.isAfter){
             StudentManager.afterUpdateInsertStudent(Trigger.New,Trigger.oldMap);
         }
     }

@@ -1,8 +1,8 @@
 public class ClassManager {
-    public static List<Class__c> beforeDeleteClass()
+    public static List<Class__c> beforeDeleteClass(List<Class__c> triggerOld)
     {
-        List<Class__c> cla = [SELECT id,(SELECT id FROM Students__r WHERE Sex__c='FEMALE')  FROM Class__c WHERE id IN :Trigger.old];
-        for(Class__c c:cla)
+        List<Class__c> classList = [SELECT id,(SELECT id FROM Students__r WHERE Sex__c='FEMALE')  FROM Class__c WHERE id IN :triggerOld];
+        for(Class__c c:classList)
         {
             if(c.Students__r.size() > 1)
             {
