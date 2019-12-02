@@ -10,5 +10,5 @@ trigger StudentTrigger on Student__c (before insert) {
             StudentManager.afterUpdateInsertStudent(Trigger.New,Trigger.oldMap);
         }
     }
-    
+
 }
