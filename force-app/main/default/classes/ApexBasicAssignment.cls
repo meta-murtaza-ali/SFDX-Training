@@ -1,3 +1,7 @@
+/**
+ * ApexBasicAssignment
+ */
+ 
 public class ApexBasicAssignment {
     /**
      * This method returns Student List for a particular Class. 
@@ -12,10 +16,10 @@ public class ApexBasicAssignment {
     public static Map<String,List<Student__c>> mapClassAndStudents(){
         Map<String,List<Student__c>>classAndStudents = new Map<String,List<Student__c>>();
         List<Class__c>  listClass = [SELECT Name FROM Class__c];
-        List<List<Student__c>> studentsId = new List<List<Student__c>>();
-        for(Integer i=0; i < listClass.size(); i++){
-            studentsId.add([SELECT Id ,Name FROM Student__c WHERE Class__r.Name =: listClass.get(i).Name]);
-            classAndStudents.put(listClass.get(i).Name, studentsId.get(i));          
+        for(Class__c cls : listClass)
+		{
+            List<Student__c> studentsList = [SELECT Id ,Name FROM Student__c WHERE Class__r.Name =: cls.Name];
+            classAndStudents.put(cls.Name, studentsList);          
         }
         return classAndStudents;
     }
