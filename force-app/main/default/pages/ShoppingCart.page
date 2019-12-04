@@ -1,0 +1,111 @@
+<apex:page controller="ShoppingCartController" docType="html-5.0">
+    <apex:form >
+        <apex:outputPanel id="show_purchase">
+            <apex:pageMessages />
+            <apex:pageBlock >          
+                <apex:pageBlockTable title="Purchase Order History" value="{!PurchaseOrder}" var="po" >
+                    <apex:column title="PO ID" value="{!po.Id}"  />
+                    <apex:column title="Order Price" value="{!po.Order_Price__c}" />
+                    <apex:column title="Order Status" value="{!po.Order_Status__c}" />  
+                </apex:pageBlockTable>              
+                <apex:panelGrid columns="4">
+                    <apex:commandButton value="First" action="{!first}" disabled="{! (!hasFirst)}"  />
+                    <apex:commandButton value="Previous" action="{!previous}" disabled="{!(!hasPrevious)}"  />
+                    <apex:commandButton value="Next" action="{!next}" disabled="{!(!hasNext)}"  />
+                    <apex:commandButton value="Last" action="{!last}" disabled="{!(!hasLast)}"  />
+                </apex:panelGrid>        
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <div align="center">
+            <apex:commandButton value="Add New Purchase" action="{!getshowProducts}" reRender="show_list" />    
+        </div><br />
+        <apex:outputPanel id="show_list">
+            <apex:pageBlock title="Products" rendered="{! render}" id="testBlock">
+                <apex:pageMessages id="errors" />
+                <apex:actionFunction name="searchProduct" action="{!search}" reRender="testBlock">
+                    <apex:param name="searchtoVF" assignTo="{! SearchProduct}" value=""/>
+                </apex:actionFunction>
+                <table width="100%">
+                    <tr>
+                        <td align="left">
+                            <apex:inputText value="{! SearchProduct}" html-placeholder="Search Products" onchange="searchProduct(this.value)" />
+                        </td>
+                        <td align="right">
+                            <apex:commandButton value="Add to Cart" action="{! addItemCart}" reRender="show_cart,show_list" />
+                        </td>
+                    </tr>
+                </table>
+                <apex:pageBlock id="table" >
+                    <apex:pageBlockTable value="{! allProducts}" var="all_product" id="show_product">
+                        <apex:column title="Select Products">
+                            <apex:inputCheckbox title="Select Products" value="{! isSelected}"  >
+                                <apex:actionSupport event="onclick" action="{! storeId}" reRender="show_purchase" >
+                                    <apex:param name="ProductId" assignTo="{! productId}" value="{!all_product.id}" />
+                                </apex:actionSupport>
+                            </apex:inputCheckbox>
+                        </apex:column>
+                        <apex:column title="PO ID" value="{!all_product.Name}"  />
+                        <apex:column title="Order Price" value="{!all_product.ProductCode}" />
+                        <apex:column title="Order Status" value="{!all_product.Description}" />
+                        <apex:column title="Order Status" value="{!all_product.Price_Per_Unit__c}" />
+                        <apex:column title="Order Status" value="{!all_product.Quantity_available__c}" />
+                    </apex:pageBlockTable>
+                    <apex:panelGrid columns="4">
+                        <apex:commandButton value="First" action="{!firstProduct}" disabled="{!(!hasFirstProduct)}" reRender="table" />
+                        <apex:commandButton value="Previous" action="{!previousProduct}" disabled="{!(!hasPreviousProduct)}" reRender="table" />
+                        <apex:commandButton value="Next" action="{!nextProduct}" disabled="{!(!hasNextProduct)}" reRender="table" />
+                        <apex:commandButton value="Last" action="{!lastProduct}" disabled="{!(! hasLastProduct)}" reRender="table" />
+                    </apex:panelGrid>
+                </apex:pageBlock>
+            </apex:pageBlock>            
+        </apex:outputPanel>
+        <apex:outputPanel id="show_cart" >
+            <apex:pageBlock title="Cart Item" rendered="{! rendercart}"  >
+                <apex:pageBlockTable value="{! cartItem}" var="cart_Item"  >
+                    <apex:column title="PO ID" value="{!cart_Item.Name}" />
+                    <apex:column title="ProductCode" value="{!cart_Item.ProductCode}" />
+                    <apex:column title="Description" value="{!cart_Item.Description}" />
+                    <apex:column title="Price_Per_Unit__c" value="{!cart_Item.Price_Per_Unit__c}" />
+                    <apex:column title="Quantity" headerValue="Quantity" >           
+                        <apex:inputText id="setParamvalue" value="{! productQuantity[cart_Item.id]}"  >
+                            <apex:actionSupport event="onchange" action="{! setParam}" reRender="show_cart,show_product">
+                                <apex:param name="Product Id" assignTo="{!productId}" value="{!cart_Item.Id}"/>
+                            </apex:actionSupport>
+                        </apex:inputText>
+                    </apex:column>
+                    <apex:column >
+                        <apex:commandLink value="Delete" action="{! deleteQuant}" reRender="show_product,show_cart" >
+                            <apex:param name="Product Ids" assignTo="{! productId}" value="{! cart_Item.id}" />
+                        </apex:commandLink>
+                    </apex:column>
+                </apex:pageBlockTable>
+                <div align="center">
+                    <apex:commandButton value="Checkout" action="{! inVoice}" reRender="show_invoice,show_cart,show_list" />
+                </div> 
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:outputPanel id="show_invoice" >
+            <apex:pageBlock title="Invoice" rendered="{! renderInvoice}" >
+                <div align="right">
+                    <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                        <apex:param value="{!NOW()}" />
+                    </apex:outputText> 
+                </div>   
+                <apex:pageBlockTable value="{! cartItem}" var="invoice_Item"  >
+                    <apex:column title="PO ID" value="{!invoice_Item.Name}" />
+                    <apex:column title="ProductCode" value="{!invoice_Item.ProductCode}" />
+                    <apex:column title="Price_Per_Unit__c" value="{!invoice_Item.Price_Per_Unit__c}" />
+                    <apex:column title="Quantity" value="{!productQuantity[invoice_Item.id] }" headerValue="Quantity" />
+                    <apex:column title="Total" value="{!totalPrice[invoice_Item.id]}" headerValue="Total" />
+                </apex:pageBlockTable><br/>
+                <div align="center">
+                    <label>TotalPrice: </label>
+                    <apex:outputText value="{! finalTotal}"></apex:outputText>
+                </div><br/>
+                <div align="center">
+                    <apex:commandButton value="Place Order" action="{! placeOrder}" />
+                </div>
+            </apex:pageBlock>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>
