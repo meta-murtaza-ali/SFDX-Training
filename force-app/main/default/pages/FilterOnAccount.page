@@ -1,0 +1,52 @@
+<apex:page Controller="AccountSearch"  >
+    <apex:form >
+        <apex:pageBlock title="Account Search" id="Accounts_List" >
+            <apex:pageBlockSection >
+                <Label >NumberOfAccount</Label>
+                <apex:inputText value="{!numOfPage}" /><br/>
+                <Label >BillingCity</Label>
+                <apex:inputText value="{! bilingCity}" /><br/>
+                <Label >BillingState</Label>
+                <apex:inputText value="{! billingState}"/><br/>
+                <Label >BillingCountry</Label>
+                <apex:inputText value="{!billingCountry}" /><br/>
+                <apex:commandButton action="{!accountSearch}" value="Search" />
+            </apex:pageBlockSection>
+            <apex:pageBlockTable value="{!result}" var="acc">
+                <apex:column value="{! acc.Name}" />
+                <apex:column value="{!acc.BillingCity}" />
+                <apex:column value="{!acc.BillingState}" />
+                <apex:column value="{!acc.BillingCountry}" />           
+            </apex:pageBlockTable>
+            <!-- Pagination -->
+            <table style="width: 100%"><tr>
+                <td>
+                    Page: <apex:outputText value=" {!ssc.PageNumber} of {! CEILING(ResultSize / PageSize) }"/>
+                </td>            
+                <td align="center">
+                    <!--First-->
+                    <apex:commandLink action="{! ssc.First }" value="First"
+                                      />&nbsp;&nbsp;
+                    <!-- Previous page -->
+                    <!-- active -->
+                    <apex:commandLink action="{! ssc.Previous }" value="« Previous"
+                                      rendered="{! HasPrevious}"/>
+                    <!-- inactive (no earlier pages) -->
+                    <apex:outputText style="color: #ccc;" value="« Previous"
+                                     rendered="{! NOT(HasPrevious) }"/>
+                    &nbsp;&nbsp;
+                    <!--First-->
+                    <apex:commandLink action="{! ssc.Last }" value="Last"
+                                      />&nbsp;&nbsp;
+                    <!-- Next page -->
+                    <!-- active -->
+                    <apex:commandLink action="{! ssc.Next }" value="Next »"
+                                      rendered="{! HasNext }"/>
+                    <!-- inactive (no more pages) -->
+                    <apex:outputText style="color: #ccc;" value="Next »"
+                                     rendered="{! NOT(HasNext) }"/>
+                </td>
+                </tr></table>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

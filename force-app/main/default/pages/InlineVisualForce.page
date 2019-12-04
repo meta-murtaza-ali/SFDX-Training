@@ -1,0 +1,7 @@
+<apex:page standardController="Contact" extensions="InlineController">
+    <apex:pageBlock >
+    	<apex:pageBlockSection title="{! recordName}" collapsible="false" columns="2">
+        	<apex:outputField value="{! contactDetail.Name}" />	
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:page>
