@@ -1,0 +1,27 @@
+<apex:page standardController="Student__c" >
+    <script src="../../soap/ajax/42.0/connection.js" type="text/javascript"></script>
+    <script>
+        sforce.connection.sessionId = '{!$Api.Session_ID}';
+    var records =  '{!$CurrentPage.parameters.recs}';
+    var recordsIds = [];
+    recordsIds = records.split(',');
+    function continueStudent(){ 
+        var delResult = sforce.connection.deleteIds(recordsIds);
+        if (delResult[0].getBoolean("success")) {
+            alert(" deleted");
+        } else {
+            alert("failed to delete");
+        }
+        window.opener.location.href = '/a04/o';
+        window.close();
+    }
+    function cancelStudent(){
+        window.opener.location.href = '/a04/o';
+        window.close();
+        }
+    </script>
+    <apex:form >
+        <apex:commandButton value="Continue" onclick="continueStudent();return false;" />
+        <apex:commandButton value="Cancel" onclick="cancelStudent()" />
+    </apex:form>
+</apex:page>
