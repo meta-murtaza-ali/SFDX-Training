@@ -1,7 +1,8 @@
-<apex:page standardController="Contact" extensions="InlineController">
+<apex:page standardController="Contact">
     <apex:pageBlock >
-    	<apex:pageBlockSection title="{! recordName}" collapsible="false" columns="2">
-        	<apex:outputField value="{! contactDetail.Name}" />	
+    	<apex:pageBlockSection title="{! Contact.RecordType.Name}" collapsible="false" columns="2">
+        	<apex:outputField value="{! Contact.Name}" />
+            <apex:outputField value="{! Contact.OwnerId}" />
         </apex:pageBlockSection>
     </apex:pageBlock>
 </apex:page>

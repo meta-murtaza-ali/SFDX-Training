@@ -2,27 +2,51 @@ public class AccountSearch {
     public string bilingCity{get;set;}
     public string billingState{get;set;}
     public string billingCountry{get;set;}
-    public List<Account> result{get;set;}
-    public Integer numOfPage{get;set;}
-    public Integer PageNumber{get;set;}
     public Integer ResultSize{get;set;}
-    public Integer PageSize{get;set;}
-    public boolean HasPrevious{get;set;}
-    public boolean HasNext{get;set;}
-    public ApexPages.StandardSetController ssc{get;set;}
-    public AccountSearch(){
-        result = [SELECT Name,BillingCity,BillingState,BillingCountry FROM Account];
-        ssc = new ApexPages.StandardSetController(result);
-        ssc.setPageSize(10);
+    public Integer numOfPage{get;set;}
+    public String query;
+    public AccountSearch() {
+        numOfPage = 10;
     }
+    public void setbilingCity(String city){
+        this.bilingCity = city;
+    }
+    
+    public void setbillingState(String state){
+        this.billingState = state ;
+    }
+    
+    public void setbillingCountry(String country){
+        this.billingCountry = country ;
+    }
+    public ApexPages.StandardSetController ssc {
+        get {
+            if(ssc == null) {
+                ssc = new ApexPages.StandardSetController(Database.query(query));
+                ssc.setPageSize(numOfPage);  
+            }            
+            return ssc;
+        }
+        set;
+    }
+    
     public void accountSearch(){
-        result = [SELECT Name,BillingCity,BillingState,BillingCountry FROM Account WHERE BillingCity=:bilingCity AND BillingState=:billingState AND BillingCountry=:billingCountry ];
-       ssc = new ApexPages.StandardSetController(result);
-        ssc.setPageSize(numOfPage);
-        PageNumber = ssc.getPageNumber();
+        ssc = null;
+    }
+    
+    public List<Account> getResult() {
+        query = 'select Name , BillingCity , BillingState ,BillingCountry FROM Account ';
+        if(!String.isBlank(bilingCity)||!String.isBlank(billingState)||!String.isBlank(billingCountry)) {
+            query+='WHERE' ;
+            query+=String.isBlank(bilingCity)?'':' BillingCity LIKE '+'\'%'+bilingCity+'%\''+' AND ';
+            query+=String.isBlank(billingState)?'':' BillingState LIKE '+'\'%'+billingState+'%\''+' AND ';
+            query+=String.isBlank(billingCountry)?'':' BillingCountry LIKE '+'\'%'+billingCountry+'%\'';
+        }
+        if(query.endsWith('AND ')) {
+            query = query.substring(0, query.length()-4);
+        }
+        
         ResultSize = ssc.getResultSize();
-        PageSize = ssc.getPageSize();
-        HasPrevious = ssc.getHasPrevious();
-        HasNext = ssc.getHasNext();
+        return (List<Account>) ssc.getRecords();
     }
 }
