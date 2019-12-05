@@ -1,6 +1,6 @@
-@isTest(seealldata=false)
-public class TestClassDeletion {
-    @isTest static void testPositive(){
+@isTest(Seealldata=false)
+private class TestClassDeletion {
+    @isTest static void testClassDeletion_WithFemaleStudents(){
         Class__c cls = new Class__c(Name='PKG',Board__c='RBSE',Fee__c=15000);
         insert cls;
         List<Student__c> studnt = new List<Student__c>();
@@ -12,12 +12,12 @@ public class TestClassDeletion {
         Test.startTest();
         Database.DeleteResult result = Database.delete(cls,false);
         Test.stopTest();
-        System.assert(result.getErrors().size() > 0);
+        System.assertEquals(true,result.getErrors().size() > 0);
         System.assertEquals('Cannot delete Class Because there are more than 1 Female Student.',
                              result.getErrors()[0].getMessage());
     }
     
-    @isTest static void testNegative(){
+    @isTest static void testClassDeletion_WithMaleStudents(){
         Class__c cls = new Class__c(Name='PKG',Board__c='RBSE',Fee__c=15000);
         insert cls;
         List<Student__c> studnt = new List<Student__c>();
@@ -29,6 +29,6 @@ public class TestClassDeletion {
         Test.startTest();
         Database.DeleteResult result = Database.delete(cls,false);
         Test.stopTest();
-        System.assert(result.isSuccess());
+        System.assertEquals(true, result.isSuccess(), 'Record should  be Deleted');
     }
 }

@@ -1,6 +1,6 @@
-@isTest(seealldata=false)
-public class TestDeleteStudents {
-    @isTest static void testPositive(){
+@isTest(Seealldata=false)
+private class TestDeleteStudents {
+    @isTest static void testDeleteStudents_WithCustomStatusChange(){
         Class__c cls = new Class__c(Name='PKG',Board__c='RBSE',Fee__c=15000,Custom_Status__c='New');
         insert cls;
         List<Student__c> studnt = new List<Student__c>();
@@ -16,7 +16,7 @@ public class TestDeleteStudents {
         System.assertEquals(0, clas.Number_Of_Students__c);
     }
     
-    @isTest static void testNegative(){
+    @isTest static void testDeleteStudents_CustomStatusNotChange(){
         Class__c cls = new Class__c(Name='PKG',Board__c='RBSE',Fee__c=15000,Custom_Status__c='Reset');
         insert cls;
         List<Student__c> studnt = new List<Student__c>();
