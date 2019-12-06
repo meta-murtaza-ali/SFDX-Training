@@ -7,4 +7,17 @@ public class OpportunityManager {
         }
         return triggerNew;
     }
+    
+    public static List<Opportunity> afterUpdateOpportunity(List<Opportunity> triggerNew,Map<Id,Opportunity> triggerOldMap){
+        List<Opportunity> opportunityList = new List<Opportunity>();
+        for(Opportunity opp :triggerNew){
+            if((triggerOldMap.get(opp.Id).StageName != opp.StageName)){
+                opportunityList.add(opp);
+            }
+        }
+        if(opportunityList.size()>0){
+        EmailOnChangingOpportunity.sendEmailNotification(opportunityList);
+        }
+        return triggerNew;
+    }
 }
