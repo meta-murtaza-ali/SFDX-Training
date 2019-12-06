@@ -6,8 +6,12 @@ public class QueryTableController
     public String queryToBeExecuted;
     public List<String> fieldsList{get;set;}
     public String sortBy;
-    public Integer DesiredPage{get;set;}
+    public Integer desiredPage{get;set;}
     public Boolean isSortingLinkClicked = false;
+    public String sortDir {
+       get  { if (sortDir == null) {  sortDir = 'asc'; } return sortDir;  }
+       set;
+   }
     /**
      * This is Standard Set Controller Object.
      */
@@ -46,6 +50,7 @@ public class QueryTableController
         if(!this.queryToBeExecuted.equalsIgnoreCase(query))
         {
             this.queryToBeExecuted = query;
+            isSortingLinkClicked = false;
             this.setCon = null;
         }
     }
@@ -82,14 +87,16 @@ public class QueryTableController
 	// Create final query.
     private String createQuery(String query)
     {
-        String orderedQuery = query;        
+        String orderedQuery = query;       
         if(isSortingLinkClicked && String.isNotBlank(this.getSortBy()))
         {
             if(query.containsIgnoreCase('order by'))
             {
                 orderedQuery = orderedQuery.substring(0, query.indexOfIgnoreCase('order by') - 1);
             }
-            orderedQuery = orderedQuery + ' ORDER BY ' + this.getSortBy();
+            sortDir = sortDir.equals('asc') ? 'desc' : 'asc';
+            orderedQuery = orderedQuery + ' ORDER BY ' + this.getSortBy() + ' ' + sortDir;
+            queryToBeExecuted = orderedQuery;
         }
         return orderedQuery;
     }
@@ -106,7 +113,7 @@ public class QueryTableController
         }
         catch(Exception excp)
         {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, excp.getMessage())); 
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Enter Valid Query')); 
             return null;
         }
         return sObjectList;
@@ -143,6 +150,6 @@ public class QueryTableController
 	// Method for jump to a desired page number.
     public void jumpToPage()
     {
-        this.setCon.setPageNumber(DesiredPage);
+        this.setCon.setPageNumber(desiredPage);
     }
 }
