@@ -1,0 +1,16 @@
+<apex:page controller="ShowContactList">
+    <apex:form >
+        <apex:pageBlock title="List Of Contacts" id="Contact_List"  >
+            <apex:pageBlockSection >
+                <apex:selectRadio value="{! contctRecord}" id="List_Contact">
+                    <apex:selectOptions value="{! Items}" ></apex:selectOptions>
+                </apex:selectRadio>
+            </apex:pageBlockSection>
+            <td align="center">
+                <apex:commandButton value="Save" action="{! Save}" />
+                <apex:commandButton value="Clear" action="{! Clear}" />
+                <apex:commandButton value="Cancel" action="{! Cancel}" />
+            </td>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
