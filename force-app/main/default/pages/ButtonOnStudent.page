@@ -1,0 +1,10 @@
+<apex:page id="thePage" standardController="Student__c">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockTable value="{!Student__c}" var="std">
+                <apex:column value="{!std.Name}" />
+                <apex:column value="{!std.Class__r.Name}" />
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
