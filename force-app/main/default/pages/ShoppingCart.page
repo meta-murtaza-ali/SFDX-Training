@@ -9,10 +9,10 @@
                     <apex:column title="Order Status" value="{!po.Order_Status__c}" />  
                 </apex:pageBlockTable>              
                 <apex:panelGrid columns="4">
-                    <apex:commandButton value="First" action="{!first}" disabled="{! (!hasFirst)}"  />
-                    <apex:commandButton value="Previous" action="{!previous}" disabled="{!(!hasPrevious)}"  />
-                    <apex:commandButton value="Next" action="{!next}" disabled="{!(!hasNext)}"  />
-                    <apex:commandButton value="Last" action="{!last}" disabled="{!(!hasLast)}"  />
+                    <apex:commandButton value="First" action="{!setCon.first}" disabled="{! (!setCon.hasPrevious)}"  />
+                    <apex:commandButton value="Previous" action="{!setCon.previous}" disabled="{!(!setCon.hasPrevious)}"  />
+                    <apex:commandButton value="Next" action="{!setCon.next}" disabled="{!(!setCon.hasNext)}"  />
+                    <apex:commandButton value="Last" action="{!setCon.last}" disabled="{!(!setCon.hasNext)}"  />
                 </apex:panelGrid>        
             </apex:pageBlock>
         </apex:outputPanel>
@@ -22,8 +22,8 @@
         <apex:outputPanel id="show_list">
             <apex:pageBlock title="Products" rendered="{! render}" id="testBlock">
                 <apex:pageMessages id="errors" />
-                <apex:actionFunction name="searchProduct" action="{!search}" reRender="testBlock">
-                    <apex:param name="searchtoVF" assignTo="{! SearchProduct}" value=""/>
+                <apex:actionFunction name="searchProduct" action="{!search}" reRender="table">
+                    <apex:param name="searchtoVF" assignTo="{! SearchProduct}" value="{! SearchProduct}"/>
                 </apex:actionFunction>
                 <table width="100%">
                     <tr>
@@ -38,8 +38,8 @@
                 <apex:pageBlock id="table" >
                     <apex:pageBlockTable value="{! allProducts}" var="all_product" id="show_product">
                         <apex:column title="Select Products">
-                            <apex:inputCheckbox title="Select Products" value="{! isSelected}"  >
-                                <apex:actionSupport event="onclick" action="{! storeId}" reRender="show_purchase" >
+                            <apex:inputCheckbox title="Select Products" value="{! isSelected[all_product.id]}"  >
+                                <apex:actionSupport event="onclick" action="{! storeId}" reRender="show_product" >
                                     <apex:param name="ProductId" assignTo="{! productId}" value="{!all_product.id}" />
                                 </apex:actionSupport>
                             </apex:inputCheckbox>
@@ -48,13 +48,13 @@
                         <apex:column title="Order Price" value="{!all_product.ProductCode}" />
                         <apex:column title="Order Status" value="{!all_product.Description}" />
                         <apex:column title="Order Status" value="{!all_product.Price_Per_Unit__c}" />
-                        <apex:column title="Order Status" value="{!all_product.Quantity_available__c}" />
+                        <apex:column title="Order Status" value="{!quantityClone[all_product.id].Quantity_available__c}" />
                     </apex:pageBlockTable>
                     <apex:panelGrid columns="4">
-                        <apex:commandButton value="First" action="{!firstProduct}" disabled="{!(!hasFirstProduct)}" reRender="table" />
-                        <apex:commandButton value="Previous" action="{!previousProduct}" disabled="{!(!hasPreviousProduct)}" reRender="table" />
-                        <apex:commandButton value="Next" action="{!nextProduct}" disabled="{!(!hasNextProduct)}" reRender="table" />
-                        <apex:commandButton value="Last" action="{!lastProduct}" disabled="{!(! hasLastProduct)}" reRender="table" />
+                        <apex:commandButton value="First" action="{!setCon1.first}" disabled="{!(!setCon1.hasPrevious)}" reRender="table" />
+                        <apex:commandButton value="Previous" action="{!setCon1.previous}" disabled="{!(!setCon1.hasPrevious)}" reRender="table" />
+                        <apex:commandButton value="Next" action="{!setCon1.next}" disabled="{!(!setCon1.hasNext)}" reRender="table" />
+                        <apex:commandButton value="Last" action="{!setCon1.last}" disabled="{!(!setCon1.hasNext)}" reRender="table" />
                     </apex:panelGrid>
                 </apex:pageBlock>
             </apex:pageBlock>            
