@@ -1,0 +1,8 @@
+<apex:page standardController="Contact">
+    <apex:pageBlock >
+    	<apex:pageBlockSection title="{! Contact.RecordType.Name}" collapsible="false" columns="2">
+        	<apex:outputField value="{! Contact.Name}" />
+            <apex:outputField value="{! Contact.OwnerId}" />
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:page>

@@ -1,0 +1,31 @@
+<apex:page standardController="Class__c" >
+    <script src="../../soap/ajax/42.0/connection.js" type="text/javascript"></script>
+    <script>
+        sforce.connection.sessionId = '{!$Api.Session_ID}';
+        function addStudent(){
+            let t = new sforce.SObject('Student__c');    
+            t.Name = document.getElementById('{!$Component.tesForm.testBlock.testBlockSect.studentname}').value;
+            t.Class__c = document.getElementById('{!$Component.tesForm.testBlock.testBlockSect.classid}').value;
+            t.Email__c = 'sjcbsdc@jbb.com';
+            t.First_Name__c = 'Test1';
+            t.Last_Name__c = 'Test1';
+            t.Sex__c = 'Male';
+            let result = sforce.connection.create([t]);
+             if (result[0].getBoolean("success")) {
+                 window.opener.location.href = '/'+t.Class__c;
+                 window.close();
+             } else {
+                 alert("failed to create Student " + result[0]);
+             }
+        }
+    </script>
+    <apex:form id="tesForm">
+        <apex:pageBlock id="testBlock">
+            <apex:pageBlockSection id="testBlockSect">
+                <apex:inputText id="studentname" />
+                <apex:inputHidden value="{! class__c.id}" id="classid" />
+                <apex:commandButton value="Add Student" onclick="addStudent(); return false;" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

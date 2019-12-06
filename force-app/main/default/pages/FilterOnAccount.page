@@ -1,0 +1,27 @@
+<apex:page Controller="AccountSearch">
+    <apex:form>
+        <apex:pageBlock title="Account Search" id="Accounts_List">
+            <apex:pageBlockSection columns="2">
+                <apex:inputText value="{!numOfPage}" label="NumberOfAccount"/>
+                <apex:inputText value="{! bilingCity}" label="BillingCity"/>
+                <apex:inputText value="{! billingState}" label="BillingState"/>
+                <apex:inputText value="{!billingCountry}" label="BillingCountry"/>
+                <apex:commandButton action="{!accountSearch}" value="Search"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockTable value="{!result}" var="acc">
+                <apex:column value="{! acc.Name}" />
+                <apex:column value="{!acc.BillingCity}" />
+                <apex:column value="{!acc.BillingState}" />
+                <apex:column value="{!acc.BillingCountry}" />
+            </apex:pageBlockTable>
+            <apex:outputText>Page {!(ssc.pageNumber)} of {! CEILING(ResultSize / ssc.pageSize) }</apex:outputText>
+            <!-- Pagination -->
+            <apex:panelGrid columns="4">
+                <apex:commandButton value="First" action="{!ssc.first}" disabled="{! (!ssc.hasPrevious)}" />
+                <apex:commandButton value="Previous" action="{!ssc.previous}" disabled="{!(!ssc.hasPrevious)}" />
+                <apex:commandButton value="Next" action="{!ssc.next}" disabled="{!(!ssc.hasNext)}" />
+                <apex:commandButton value="Last" action="{!ssc.last}" disabled="{!(!ssc.hasNext)}" />
+            </apex:panelGrid>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
