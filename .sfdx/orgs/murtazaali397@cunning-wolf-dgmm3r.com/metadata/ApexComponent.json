@@ -1,0 +1,31 @@
+{
+  "status": 0,
+  "result": [
+    {
+      "createdById": "0052v00000fN20VAAS",
+      "createdByName": "murtaza ali",
+      "createdDate": "2019-11-29T11:55:59.000Z",
+      "fileName": "components/QueryResult.component",
+      "fullName": "QueryResult",
+      "id": "0992v000000h3NFAAY",
+      "lastModifiedById": "0052v00000fN20VAAS",
+      "lastModifiedByName": "murtaza ali",
+      "lastModifiedDate": "2019-12-01T11:19:50.000Z",
+      "manageableState": "unmanaged",
+      "type": "ApexComponent"
+    },
+    {
+      "createdById": "0052v00000fN20VAAS",
+      "createdByName": "murtaza ali",
+      "createdDate": "2019-12-02T03:55:12.000Z",
+      "fileName": "components/QueryResultsComponent.component",
+      "fullName": "QueryResultsComponent",
+      "id": "0992v000000h3WMAAY",
+      "lastModifiedById": "0052v00000fN20VAAS",
+      "lastModifiedByName": "murtaza ali",
+      "lastModifiedDate": "2019-12-02T03:56:45.000Z",
+      "manageableState": "unmanaged",
+      "type": "ApexComponent"
+    }
+  ]
+}
