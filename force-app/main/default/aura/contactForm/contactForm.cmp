@@ -1,0 +1,31 @@
+<aura:component>
+    <aura:attribute name="newContact" type="Contact"/>
+
+    <aura:registerEvent name="createNewContact" type="c:contactItemEdit" />
+    <!-- CREATE NEW Contact -->
+    <lightning:card  title="Add Contact">
+        <div class="slds-p-around_small">
+            <lightning:input aura:id="contactform" label="Contact Name"
+                             name="contactname"
+                             value="{!v.newContact.LastName}"
+                             placeholder="Contact Name"
+                             required="true" />
+            <lightning:input type="email" aura:id="contactform" label="Email"
+                             name="contactemail"
+                             formatter="email"
+                             placeholder="Email"
+                             value="{!v.newContact.Email}"
+                             messageWhenRangeUnderflow="Enter an valid Email ID" />
+            <lightning:input type ="tel" aura:id="contactform" label="Phone"
+                             name="contactphone"
+                             placeholder="Phone"
+                             value="{!v.newContact.MobilePhone}"
+                             messageWhenPatternMismatch="Phone number is not valid" />
+        </div>
+        <aura:set attribute="footer">
+            <lightning:button label="Create Contact" 
+                              variant="brand"
+                              onclick="{!c.clickCreate}" />
+        </aura:set>
+    </lightning:card>     
+</aura:component>

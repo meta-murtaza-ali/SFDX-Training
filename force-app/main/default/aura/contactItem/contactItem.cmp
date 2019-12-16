@@ -1,0 +1,20 @@
+<aura:component >
+    <aura:attribute name="contactRecord" type="Contact"/>
+    <aura:registerEvent name="updateContact" type="c:contactItemEdit"/>
+    <aura:if isTrue="{!v.contactRecord}">
+        <lightning:card  iconName="standard:scan_card"
+                        class="slds-theme--success">
+            <aura:set attribute="title">
+                <lightning:buttonIcon iconName="utility:edit" class="slds-float_right" variant="bare" iconClass="dark" onclick="{!c.clickEdit}" alternativeText="Edit" />
+                <lightning:formattedUrl value="{! '/' + v.contactRecord.Id}" label="{!v.contactRecord.LastName}" tooltip="Go to record detail view" />
+            </aura:set>
+            <p class="slds-text-heading--medium slds-p-horizontal--small">
+                Email: <p><lightning:formattedtext value="{!v.contactRecord.Email}" ></lightning:formattedtext></p>
+            </p>
+            <p class="slds-text-heading--medium slds-p-horizontal--small">
+                Phone: <p><lightning:formattedphone value="{!v.contactRecord.MobilePhone}" ></lightning:formattedphone></p>
+            </p>
+            
+        </lightning:card>
+    </aura:if>
+</aura:component>
