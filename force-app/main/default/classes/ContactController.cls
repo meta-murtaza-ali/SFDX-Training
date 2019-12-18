@@ -1,12 +1,14 @@
 public with sharing class ContactController {
 	@AuraEnabled
-    public static Contact saveContact(Contact saveContact){
+    public static Contact saveContact(Contact record){
+        System.debug(record);
+
         try{
-        upsert saveContact;
+        upsert record;
         }
         catch(Exception e){
-            System.debug(e.getMessage());
+            throw new AuraHandledException(e.getMessage());
         }
-        return saveContact;
+        return record;
     }
 }

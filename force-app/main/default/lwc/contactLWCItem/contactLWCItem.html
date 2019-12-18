@@ -1,0 +1,16 @@
+<template>
+    <aura if:true={contactRecord}>
+        <lightning-card icon-name="standard:scan_card">
+            <lightning-button-icon slot="actions" icon-name="utility:edit" variant="bare" icon-class="dark"
+                onclick={clickEdit} alternative-text="Edit"></lightning-button-icon>
+            <div class="slds-p-around_medium">
+                <lightning-button variant="base" label={contactRecord.LastName} title="Go to record detail view"
+                    onclick={gotoRecord}></lightning-button>
+                <p>
+                    <lightning-formatted-text value={contactRecord.Email}></lightning-formatted-text>
+                </p>
+                <lightning-formatted-phone value={contactRecord.MobilePhone}></lightning-formatted-phone>
+            </div>
+        </lightning-card>
+    </aura>
+</template>

@@ -1,0 +1,29 @@
+<template>
+    <!-- PAGE HEADER -->
+    <lightning-layout class="slds-page-header slds-page-header--object-home">
+        <lightning-layout-item>
+            <lightning-icon icon-name="standard:scan_card" alternative-text="My Contacts"></lightning-icon>
+        </lightning-layout-item>
+        <lightning-layout-item padding="horizontal-small">
+            <div class="page-section page-header">
+                <h1 class="slds-text-heading--label">Contacts</h1>
+                <h2 class="slds-text-heading--medium">My Contact</h2>
+            </div>
+        </lightning-layout-item>
+    </lightning-layout>
+    <!-- / PAGE HEADER -->
+    <!-- NEW Contact FORM -->
+    <lightning-layout>
+        <lightning-layout-item padding="around-small" size="3">
+            <c-contact-l-w-c-form contact-object={contactobj} onsavedcontact={handelSavedContact} onerror={handelError}>
+            </c-contact-l-w-c-form>
+        </lightning-layout-item>
+
+        <lightning-layout-item padding="around-small" size="3">
+            <aura if:true={contactRec}>
+                <c-contact-l-w-c-item contact-record={contactRec} oneditcontact={handleContactEdit}>
+                </c-contact-l-w-c-item>
+            </aura>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
