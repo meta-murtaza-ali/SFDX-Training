@@ -1,7 +1,17 @@
 {
     "compilerOptions": {
         "baseUrl": ".",
-        "paths": {},
+        "paths": {
+            "c/contactLWC": [
+                "contactLWC/contactLWC.js"
+            ],
+            "c/contactLWCForm": [
+                "contactLWCForm/contactLWCForm.js"
+            ],
+            "c/contactLWCItem": [
+                "contactLWCItem/contactLWCItem.js"
+            ]
+        },
         "experimentalDecorators": true
     },
     "include": [

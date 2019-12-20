@@ -1,3 +1,4 @@
 {
-    "defaultusername": "SFDX"
+    "defaultusername": "vscodeOrg",
+    "defaultdevhubusername": "myhuborg"
 }

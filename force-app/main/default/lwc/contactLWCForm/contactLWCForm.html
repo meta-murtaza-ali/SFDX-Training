@@ -1,0 +1,13 @@
+<template>
+    <lightning-card title="Add Contact">
+        <div class="slds-p-around_small">
+            <lightning-input type="text" name="contactname" value={state.contact.LastName} placeholder="Contact Name"
+                required></lightning-input>
+            <lightning-input type="email" name="contactemail" formatter="email" placeholder="Email"
+                value={state.contact.Email}></lightning-input>
+            <lightning-input type="tel" name="contactphone" placeholder="Phone" value={state.contact.MobilePhone}>
+            </lightning-input>
+        </div>
+        <lightning-button label="Save Contact" variant="brand" onclick={handleSubmit}></lightning-button>
+    </lightning-card>
+</template>
