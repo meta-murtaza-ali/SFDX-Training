@@ -11,9 +11,7 @@
     if (validExpense) {
       // Create the new contact
       let createEvent = component.getEvent("createNewContact");
-      createEvent.setParams({ contactitem: component.get("v.newContact") });
-      createEvent.fire();
-      component.set("v.newContact", {});
+      helper.createContact(component, component.get("v.newContact"));
     }
   }
 });
