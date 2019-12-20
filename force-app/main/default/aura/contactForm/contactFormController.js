@@ -10,7 +10,6 @@
     // If we pass error checking, do some real work
     if (validExpense) {
       // Create the new contact
-      let createEvent = component.getEvent("createNewContact");
       helper.createContact(component, component.get("v.newContact"));
     }
   }
