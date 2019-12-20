@@ -1,10 +1,8 @@
 ({
 	handleCreateContact: function(component, event, helper) {
-        var newContact = event.getParam("contactitem");
-        helper.createContact(component, newContact);
+        helper.createContact(component, event.getParam("contactitem"));
     },
     handleUpdateContact : function(component, event, helper) {
-        var newContact = event.getParam("contactitem");
-        component.set("v.newEditContact",newContact);
+        component.set("v.newEditContact",event.getParam("contactitem"));
     },
 })
