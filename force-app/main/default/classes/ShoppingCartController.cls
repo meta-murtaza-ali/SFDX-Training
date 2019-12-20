@@ -101,7 +101,7 @@ public class ShoppingCartController {
     }
     public void setParam(){
         shoppingCartService.setParam(productId);
-         productQuantity=shoppingCartService.productQuantity;
+        productQuantity=shoppingCartService.productQuantity;
     }
     public void deleteQuant(){
         shoppingCartService.deleteQuant(productId);
