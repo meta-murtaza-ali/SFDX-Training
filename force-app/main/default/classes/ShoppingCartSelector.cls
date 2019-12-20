@@ -1,4 +1,4 @@
-public class ShoppingCartSelector  {
+public class ShoppingCartSelector {
     public static List<PurchaseOrder__c> getPurchaseOrderList(){
         return new List<PurchaseOrder__c>([SELECT id,Order_Price__c,Order_Status__c from PurchaseOrder__c]);
     }

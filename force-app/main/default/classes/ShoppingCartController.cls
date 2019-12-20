@@ -5,7 +5,6 @@ public class ShoppingCartController {
     public Map<Id,boolean> isSelected{get;set;}
     public String SearchProduct{get{return SearchProduct;}set{SearchProduct = value;}}
     public Map<Id, Product2> allProduct{get;set;}
-    public Map<ID,boolean> productNameList{get;set;}
     public Id productId{get;set;}
     public List<Product2> searchProductList{get;set;}
     public Map<Id,Decimal> totalPrice{get;set;}
@@ -17,7 +16,6 @@ public class ShoppingCartController {
     }set;}
     public Map<Id,Integer> productQuantity{get;set;}
     public Integer setParam{get;set;}
-    public Map<Id,Integer> prevQuant = new Map<Id,Integer>();
     ShoppingCartService shoppingCartService;
     public ShoppingCartController(){
         shoppingCartService = new shoppingCartService();
@@ -28,7 +26,6 @@ public class ShoppingCartController {
         totalPrice = new Map<Id,Decimal>();
         finalTotal = 0;
         searchProductList = new List<Product2>();
-        productNameList = new Map<ID,boolean>();
     }
     public static List<Schema.FieldSetMember> getProductFields() {
         return shoppingCartService.getProductFields();
@@ -101,12 +98,10 @@ public class ShoppingCartController {
         rendercart = shoppingCartService.rendercart;
         productQuantity=shoppingCartService.productQuantity;
         isSelected = shoppingCartService.isSelected;
-        prevQuant = shoppingCartService.prevQuant;
     }
     public void setParam(){
         shoppingCartService.setParam(productId);
          productQuantity=shoppingCartService.productQuantity;
-        prevQuant = shoppingCartService.prevQuant;
     }
     public void deleteQuant(){
         shoppingCartService.deleteQuant(productId);

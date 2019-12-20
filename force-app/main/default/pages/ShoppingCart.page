@@ -45,7 +45,7 @@
                             </apex:inputCheckbox>
                         </apex:column>
                         
-                            <apex:repeat value="{!ProductFields}" var="field">
+                            <apex:repeat value="{!productFields}" var="field">
                                 <apex:column value="{!all_product[field.fieldPath]}"></apex:column>
                             </apex:repeat>
                         
